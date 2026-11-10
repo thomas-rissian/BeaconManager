@@ -1,0 +1,6 @@
+@BaliseManager_HostAddress = http://localhost:5095
+
+GET {{BaliseManager_HostAddress}}/api/beacons
+Accept: application/json
+
+###
