@@ -92,3 +92,26 @@ DELETE {{BaliseManager_HostAddress}}/api/beacons/1
 DELETE {{BaliseManager_HostAddress}}/api/beacons/999999
 
 ###
+
+GET {{BaliseManager_HostAddress}}/api/beacons/1/events
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/beacon-events/1
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/beacon-events/999999
+Accept: application/json
+
+###
+
+PATCH {{BaliseManager_HostAddress}}/api/beacon-events/1/read
+
+###
+
+PATCH {{BaliseManager_HostAddress}}/api/beacon-events/999999/read
+
+###

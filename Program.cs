@@ -18,6 +18,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IBeaconRepository, BeaconRepository>();
 builder.Services.AddScoped<IBeaconService, BeaconService>();
+builder.Services.AddScoped<IBeaconEventRepository, BeaconEventRepository>();
+builder.Services.AddScoped<IBeaconEventService, BeaconEventService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

@@ -34,6 +34,23 @@ public sealed class BeaconsController(IBeaconService beaconService)
         return beacon is null ? NotFound() : Ok(beacon);
     }
 
+    [HttpGet("{id:int}/events")]
+    [ProducesResponseType(
+        StatusCodes.Status200OK,
+        Type = typeof(IReadOnlyList<BeaconEventResponse>))]
+    public async Task<ActionResult<IReadOnlyList<BeaconEventResponse>>> GetEvents(
+        int id,
+        [FromServices] IBeaconEventService beaconEventService,
+        CancellationToken cancellationToken)
+    {
+        IReadOnlyList<BeaconEventResponse> events =
+            await beaconEventService.GetByBeaconIdAsync(
+                id,
+                cancellationToken);
+
+        return Ok(events);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(BeaconResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
