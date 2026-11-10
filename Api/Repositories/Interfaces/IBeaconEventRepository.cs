@@ -12,6 +12,10 @@ public interface IBeaconEventRepository
         int id,
         CancellationToken cancellationToken = default);
 
+    Task AddAsync(
+        BeaconEvent beaconEvent,
+        CancellationToken cancellationToken = default);
+
     Task<bool> MarkAsReadAsync(
         int id,
         CancellationToken cancellationToken = default);

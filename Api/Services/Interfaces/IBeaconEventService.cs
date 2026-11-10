@@ -1,3 +1,4 @@
+using BaliseManager.Api.DTOs.Requests;
 using BaliseManager.Api.DTOs.Responses;
 
 namespace BaliseManager.Api.Services.Interfaces;
@@ -10,6 +11,11 @@ public interface IBeaconEventService
 
     Task<BeaconEventResponse?> GetByIdAsync(
         int id,
+        CancellationToken cancellationToken = default);
+
+    Task<BeaconEventResponse?> SimulateAsync(
+        int beaconId,
+        SimulateBeaconEventRequest request,
         CancellationToken cancellationToken = default);
 
     Task<bool> MarkAsReadAsync(

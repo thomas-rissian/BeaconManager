@@ -1,12 +1,16 @@
+using BaliseManager.Api.DTOs.Requests;
 using BaliseManager.Api.DTOs.Responses;
 using BaliseManager.Api.Models;
 using BaliseManager.Api.Repositories.Interfaces;
 using BaliseManager.Api.Services.Interfaces;
+using BaliseManager.Api.WebSockets;
 
 namespace BaliseManager.Api.Services;
 
 public sealed class BeaconEventService(
-    IBeaconEventRepository beaconEventRepository)
+    IBeaconEventRepository beaconEventRepository,
+    IBeaconRepository beaconRepository,
+    IBeaconEventNotifier beaconEventNotifier)
     : IBeaconEventService
 {
     public async Task<IReadOnlyList<BeaconEventResponse>> GetByBeaconIdAsync(
@@ -38,6 +42,46 @@ public sealed class BeaconEventService(
         CancellationToken cancellationToken = default)
     {
         return beaconEventRepository.MarkAsReadAsync(id, cancellationToken);
+    }
+
+    public async Task<BeaconEventResponse?> SimulateAsync(
+        int beaconId,
+        SimulateBeaconEventRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        Beacon? beacon =
+            await beaconRepository.GetByIdAsync(beaconId, cancellationToken);
+
+        if (beacon is null)
+        {
+            return null;
+        }
+
+        DateTime occurredAtUtc = DateTime.UtcNow;
+        BeaconEvent beaconEvent = new BeaconEvent
+        {
+            BeaconId = beaconId,
+            EventType = request.EventType,
+            Message = request.Message.Trim(),
+            OccurredAtUtc = occurredAtUtc,
+            BatteryLevel = request.BatteryLevel
+        };
+
+        if (request.BatteryLevel.HasValue)
+        {
+            beacon.BatteryLevel = request.BatteryLevel;
+        }
+
+        beacon.LastCommunicationUtc = occurredAtUtc;
+        beacon.UpdatedAtUtc = occurredAtUtc;
+
+        await beaconEventRepository.AddAsync(beaconEvent, cancellationToken);
+        await beaconRepository.UpdateAsync(beacon, cancellationToken);
+
+        BeaconEventResponse response = MapToResponse(beaconEvent);
+        await beaconEventNotifier.BroadcastAsync(response, cancellationToken);
+
+        return response;
     }
 
     private static BeaconEventResponse MapToResponse(BeaconEvent beaconEvent)

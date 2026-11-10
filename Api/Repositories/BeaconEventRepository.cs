@@ -30,6 +30,14 @@ public sealed class BeaconEventRepository(ApplicationDbContext dbContext)
                 cancellationToken);
     }
 
+    public async Task AddAsync(
+        BeaconEvent beaconEvent,
+        CancellationToken cancellationToken = default)
+    {
+        await dbContext.BeaconEvents.AddAsync(beaconEvent, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task<bool> MarkAsReadAsync(
         int id,
         CancellationToken cancellationToken = default)

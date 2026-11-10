@@ -5,6 +5,26 @@ Accept: application/json
 
 ###
 
+GET {{BaliseManager_HostAddress}}/api/beacons?page=1&pageSize=2
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/beacons?search=Workshop
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/beacons?status=Active&site=Nantes
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/beacons?page=0&pageSize=101
+Accept: application/json
+
+###
+
 GET {{BaliseManager_HostAddress}}/api/beacons/1
 Accept: application/json
 
@@ -115,3 +135,31 @@ PATCH {{BaliseManager_HostAddress}}/api/beacon-events/1/read
 PATCH {{BaliseManager_HostAddress}}/api/beacon-events/999999/read
 
 ###
+
+POST {{BaliseManager_HostAddress}}/api/beacons/1/simulate-event
+Content-Type: application/json
+
+{
+  "eventType": "LowBattery",
+  "message": "Simulated low battery event.",
+  "batteryLevel": 12
+}
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/dashboard/summary
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/dashboard/recent-events
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/dashboard/battery-status
+Accept: application/json
+
+###
+
+# WebSocket client endpoint: ws://localhost:5095/ws/events
