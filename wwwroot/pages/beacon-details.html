@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Détail de la balise - BaliseManager</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Navigation principale">
+            <a class="brand" href="/">
+                <span class="brand-mark">BM</span>
+                <span>
+                    <strong>BaliseManager</strong>
+                    <small>Supervision industrielle</small>
+                </span>
+            </a>
+            <nav class="main-navigation">
+                <a class="navigation-link" href="/">
+                    <span aria-hidden="true">▦</span>
+                    <span>Tableau de bord</span>
+                </a>
+                <a class="navigation-link" href="/pages/beacons.html">
+                    <span aria-hidden="true">◉</span>
+                    <span>Balises</span>
+                </a>
+                <a class="navigation-link" href="/pages/events.html">
+                    <span aria-hidden="true">◌</span>
+                    <span>Événements</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <span class="connection-indicator is-offline" data-connection-indicator></span>
+                <span data-connection-label>Notifications déconnectées</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Gestion du parc</p>
+                    <h1 data-beacon-title>Détail de la balise</h1>
+                </div>
+                <div class="header-status">
+                    <span class="status-dot is-offline" data-connection-indicator></span>
+                    <span data-connection-label>Hors ligne</span>
+                </div>
+            </header>
+
+            <p class="page-message muted-text" data-detail-status>Chargement...</p>
+
+            <section class="detail-grid" data-beacon-details hidden>
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Identité</p>
+                            <h2 data-beacon-name>—</h2>
+                        </div>
+                        <span data-beacon-status-badge></span>
+                    </div>
+                    <dl class="detail-list">
+                        <div><dt>Code</dt><dd data-beacon-code>—</dd></div>
+                        <div><dt>Équipement</dt><dd data-beacon-equipment>—</dd></div>
+                        <div><dt>Site</dt><dd data-beacon-site>—</dd></div>
+                        <div><dt>Batterie</dt><dd data-beacon-battery>—</dd></div>
+                        <div><dt>Dernière communication</dt><dd data-beacon-last-communication>—</dd></div>
+                    </dl>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Simulation</p>
+                            <h2>Créer un événement</h2>
+                        </div>
+                    </div>
+                    <form class="simulation-form" data-simulation-form>
+                        <div class="form-field">
+                            <label for="event-type">Type d’événement</label>
+                            <select id="event-type" name="eventType" required>
+                                <option value="LowBattery">Batterie faible</option>
+                                <option value="MotionDetected">Mouvement détecté</option>
+                                <option value="CommunicationLost">Communication perdue</option>
+                                <option value="Maintenance">Maintenance</option>
+                                <option value="Reconnected">Reconnexion</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="event-message">Message</label>
+                            <textarea id="event-message" name="message" rows="3"
+                                      maxlength="500" required></textarea>
+                        </div>
+                        <div class="form-field">
+                            <label for="event-battery">Batterie (facultatif)</label>
+                            <input id="event-battery" name="batteryLevel"
+                                   type="number" min="0" max="100">
+                        </div>
+                        <button class="button button-primary" type="submit">
+                            Simuler l’événement
+                        </button>
+                        <p class="form-message" data-simulation-status></p>
+                    </form>
+                </article>
+            </section>
+
+            <section class="panel detail-events-panel" data-beacon-details hidden>
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Historique</p>
+                        <h2>Événements de la balise</h2>
+                    </div>
+                </div>
+                <div class="event-list" data-beacon-events>
+                    <p class="muted-text">Chargement des événements...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/utils/formatters.js"></script>
+    <script src="/js/utils/validators.js"></script>
+    <script src="/js/realtime/notifications.js"></script>
+    <script src="/js/pages/beacon-details.js"></script>
+</body>
+</html>

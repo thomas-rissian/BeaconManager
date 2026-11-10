@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Événements - BaliseManager</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Navigation principale">
+            <a class="brand" href="/">
+                <span class="brand-mark">BM</span>
+                <span>
+                    <strong>BaliseManager</strong>
+                    <small>Supervision industrielle</small>
+                </span>
+            </a>
+            <nav class="main-navigation">
+                <a class="navigation-link" href="/">
+                    <span aria-hidden="true">▦</span>
+                    <span>Tableau de bord</span>
+                </a>
+                <a class="navigation-link" href="/pages/beacons.html">
+                    <span aria-hidden="true">◉</span>
+                    <span>Balises</span>
+                </a>
+                <a class="navigation-link" href="/pages/events.html">
+                    <span aria-hidden="true">◌</span>
+                    <span>Événements</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <span class="connection-indicator is-offline" data-connection-indicator></span>
+                <span data-connection-label>Notifications déconnectées</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Surveillance</p>
+                    <h1>Événements</h1>
+                </div>
+                <div class="header-status">
+                    <span class="status-dot is-offline" data-connection-indicator></span>
+                    <span data-connection-label>Hors ligne</span>
+                </div>
+            </header>
+
+            <section class="panel event-page-panel">
+                <div class="panel-heading event-filter-heading">
+                    <div>
+                        <p class="eyebrow">Historique récent</p>
+                        <h2>Événements à surveiller</h2>
+                    </div>
+                    <button class="button button-secondary" type="button"
+                            data-refresh-events>Actualiser</button>
+                </div>
+
+                <p class="list-status muted-text" data-events-status>
+                    Chargement des événements...
+                </p>
+
+                <div class="event-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Balise</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                                <th>État</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody data-event-rows></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/utils/formatters.js"></script>
+    <script src="/js/utils/validators.js"></script>
+    <script src="/js/realtime/notifications.js"></script>
+    <script src="/js/pages/events.js"></script>
+</body>
+</html>

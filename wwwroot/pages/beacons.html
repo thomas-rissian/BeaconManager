@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Balises - BaliseManager</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Navigation principale">
+            <a class="brand" href="/">
+                <span class="brand-mark">BM</span>
+                <span>
+                    <strong>BaliseManager</strong>
+                    <small>Supervision industrielle</small>
+                </span>
+            </a>
+
+            <nav class="main-navigation">
+                <a class="navigation-link" href="/">
+                    <span aria-hidden="true">▦</span>
+                    <span>Tableau de bord</span>
+                </a>
+                <a class="navigation-link" href="/pages/beacons.html">
+                    <span aria-hidden="true">◉</span>
+                    <span>Balises</span>
+                </a>
+                <a class="navigation-link" href="/pages/events.html">
+                    <span aria-hidden="true">◌</span>
+                    <span>Événements</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="connection-indicator is-offline" data-connection-indicator></span>
+                <span data-connection-label>Notifications déconnectées</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Gestion du parc</p>
+                    <h1>Balises</h1>
+                </div>
+                <div class="header-status">
+                    <span class="status-dot is-offline" data-connection-indicator></span>
+                    <span data-connection-label>Hors ligne</span>
+                </div>
+            </header>
+
+            <section class="panel beacon-list-panel">
+                <form class="filter-form" data-beacon-filter-form>
+                    <div class="form-field">
+                        <label for="beacon-search">Recherche</label>
+                        <input id="beacon-search" name="search" type="search"
+                               placeholder="Code, nom, équipement ou site">
+                    </div>
+                    <div class="form-field">
+                        <label for="beacon-status">Statut</label>
+                        <select id="beacon-status" name="status">
+                            <option value="">Tous les statuts</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Unknown">Inconnue</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="beacon-site">Site</label>
+                        <input id="beacon-site" name="site" type="search"
+                               placeholder="Filtrer par site">
+                    </div>
+                    <button class="button button-primary" type="submit">Rechercher</button>
+                </form>
+
+                <p class="list-status muted-text" data-beacon-status>Chargement des balises...</p>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Nom</th>
+                                <th>Équipement</th>
+                                <th>Site</th>
+                                <th>Statut</th>
+                                <th>Batterie</th>
+                                <th>Dernière communication</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody data-beacon-rows></tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" data-beacon-pagination></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/utils/formatters.js"></script>
+    <script src="/js/utils/validators.js"></script>
+    <script src="/js/realtime/notifications.js"></script>
+    <script src="/js/pages/beacons.js"></script>
+</body>
+</html>

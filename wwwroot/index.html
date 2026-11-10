@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BaliseManager</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Navigation principale">
+            <a class="brand" href="/">
+                <span class="brand-mark">BM</span>
+                <span>
+                    <strong>BaliseManager</strong>
+                    <small>Supervision industrielle</small>
+                </span>
+            </a>
+
+            <nav class="main-navigation">
+                <a class="navigation-link" href="/">
+                    <span aria-hidden="true">▦</span>
+                    <span>Tableau de bord</span>
+                </a>
+                <a class="navigation-link" href="/pages/beacons.html">
+                    <span aria-hidden="true">◉</span>
+                    <span>Balises</span>
+                </a>
+                <a class="navigation-link" href="/pages/events.html">
+                    <span aria-hidden="true">◌</span>
+                    <span>Événements</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="connection-indicator is-offline" data-connection-indicator></span>
+                <span data-connection-label>Notifications déconnectées</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">Centre de supervision</p>
+                    <h1>Tableau de bord</h1>
+                </div>
+                <div class="header-status">
+                    <span class="status-dot is-offline" data-connection-indicator></span>
+                    <span data-connection-label>Hors ligne</span>
+                </div>
+            </header>
+
+            <section class="page-introduction">
+                <p>Vue d’ensemble de votre parc de balises.</p>
+                <p class="muted-text" data-dashboard-status>Chargement des données...</p>
+            </section>
+
+            <section class="dashboard-grid" aria-label="Statistiques des balises">
+                <article class="dashboard-card">
+                    <span class="card-label">Balises totales</span>
+                    <strong class="card-value" data-summary-value="totalBeacons">—</strong>
+                </article>
+                <article class="dashboard-card">
+                    <span class="card-label">Actives</span>
+                    <strong class="card-value card-value-success" data-summary-value="activeBeacons">—</strong>
+                </article>
+                <article class="dashboard-card">
+                    <span class="card-label">Inactives</span>
+                    <strong class="card-value card-value-danger" data-summary-value="inactiveBeacons">—</strong>
+                </article>
+                <article class="dashboard-card">
+                    <span class="card-label">En maintenance</span>
+                    <strong class="card-value card-value-warning" data-summary-value="maintenanceBeacons">—</strong>
+                </article>
+                <article class="dashboard-card">
+                    <span class="card-label">Événements non lus</span>
+                    <strong class="card-value" data-summary-value="unreadEvents">—</strong>
+                </article>
+            </section>
+
+            <section class="dashboard-columns">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Surveillance</p>
+                            <h2>Événements récents</h2>
+                        </div>
+                    </div>
+                    <div class="event-list" data-recent-events>
+                        <p class="muted-text">Chargement des événements...</p>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Autonomie</p>
+                            <h2>État des batteries</h2>
+                        </div>
+                    </div>
+                    <div class="battery-list" data-battery-status>
+                        <p class="muted-text">Chargement des batteries...</p>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/api-client.js"></script>
+    <script src="/js/utils/formatters.js"></script>
+    <script src="/js/utils/validators.js"></script>
+    <script src="/js/realtime/notifications.js"></script>
+    <script src="/js/pages/dashboard.js"></script>
+</body>
+</html>
