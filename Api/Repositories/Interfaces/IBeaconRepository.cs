@@ -1,10 +1,12 @@
+using BaliseManager.Api.DTOs.Requests;
 using BaliseManager.Api.Models;
 
 namespace BaliseManager.Api.Repositories.Interfaces;
 
 public interface IBeaconRepository
 {
-    Task<IReadOnlyList<Beacon>> GetAllAsync(
+    Task<(IReadOnlyList<Beacon> Beacons, int TotalCount)> GetPageAsync(
+        BeaconQueryRequest query,
         CancellationToken cancellationToken = default);
 
     Task<Beacon?> GetByIdAsync(

@@ -9,15 +9,26 @@ namespace BaliseManager.Api.Services;
 public sealed class BeaconService(IBeaconRepository beaconRepository)
     : IBeaconService
 {
-    public async Task<IReadOnlyList<BeaconResponse>> GetAllAsync(
+    public async Task<BeaconListResponse> GetPageAsync(
+        BeaconQueryRequest query,
         CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<Beacon> beacons =
-            await beaconRepository.GetAllAsync(cancellationToken);
+        (IReadOnlyList<Beacon> Beacons, int TotalCount) page =
+            await beaconRepository.GetPageAsync(query, cancellationToken);
 
-        return beacons
+        IReadOnlyList<BeaconResponse> responses = page.Beacons
             .Select(MapToResponse)
             .ToList();
+
+        int totalPages = (int)Math.Ceiling(
+            (double)page.TotalCount / query.PageSize);
+
+        return new BeaconListResponse(
+            responses,
+            query.Page,
+            query.PageSize,
+            page.TotalCount,
+            totalPages);
     }
 
     public async Task<BeaconResponse?> GetByIdAsync(

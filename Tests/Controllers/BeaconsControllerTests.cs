@@ -14,30 +14,81 @@ public sealed class BeaconsControllerTests
     [Fact]
     public async Task GetAllAsync_ReturnsOkWithBeaconsAndForwardsCancellationToken()
     {
-        IReadOnlyList<BeaconResponse> expectedBeacons =
-        [
-            new BeaconResponse
-            {
-                Id = 1,
-                Code = "BCN-001",
-                Name = "Workshop Beacon",
-                Status = "Active"
-            }
-        ];
+        BeaconQueryRequest query = new BeaconQueryRequest
+        {
+            Page = 1,
+            PageSize = 20
+        };
+        BeaconListResponse expectedBeacons = new BeaconListResponse(
+            [
+                new BeaconResponse
+                {
+                    Id = 1,
+                    Code = "BCN-001",
+                    Name = "Workshop Beacon",
+                    Status = "Active"
+                }
+            ],
+            1,
+            20,
+            1,
+            1);
         CancellationToken cancellationToken = new CancellationTokenSource().Token;
         Mock<IBeaconService> serviceMock = new Mock<IBeaconService>();
         serviceMock
-            .Setup(service => service.GetAllAsync(cancellationToken))
+            .Setup(service => service.GetPageAsync(query, cancellationToken))
             .ReturnsAsync(expectedBeacons);
         BeaconsController controller = new BeaconsController(serviceMock.Object);
 
-        ActionResult<IReadOnlyList<BeaconResponse>> result =
-            await controller.GetAll(cancellationToken);
+        ActionResult<BeaconListResponse> result =
+            await controller.GetAll(query, cancellationToken);
 
         OkObjectResult okResult = Assert.IsType<OkObjectResult>(result.Result);
         Assert.Same(expectedBeacons, okResult.Value);
         serviceMock.Verify(
-            service => service.GetAllAsync(cancellationToken),
+            service => service.GetPageAsync(query, cancellationToken),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task GetAllAsync_ForwardsSearchAndFiltersToService()
+    {
+        BeaconQueryRequest query = new BeaconQueryRequest
+        {
+            Page = 2,
+            PageSize = 5,
+            Search = "Workshop",
+            Status = Api.Models.BeaconStatus.Active,
+            Site = "Nantes"
+        };
+        BeaconListResponse expectedPage = new BeaconListResponse(
+            Array.Empty<BeaconResponse>(),
+            2,
+            5,
+            6,
+            2);
+        Mock<IBeaconService> serviceMock = new Mock<IBeaconService>();
+        serviceMock
+            .Setup(service => service.GetPageAsync(
+                query,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expectedPage);
+        BeaconsController controller = new BeaconsController(serviceMock.Object);
+
+        ActionResult<BeaconListResponse> result =
+            await controller.GetAll(query, CancellationToken.None);
+
+        OkObjectResult okResult = Assert.IsType<OkObjectResult>(result.Result);
+        Assert.Same(expectedPage, okResult.Value);
+        serviceMock.Verify(
+            service => service.GetPageAsync(
+                It.Is<BeaconQueryRequest>(request =>
+                    request.Page == 2 &&
+                    request.PageSize == 5 &&
+                    request.Search == "Workshop" &&
+                    request.Status == Api.Models.BeaconStatus.Active &&
+                    request.Site == "Nantes"),
+                It.IsAny<CancellationToken>()),
             Times.Once);
     }
 

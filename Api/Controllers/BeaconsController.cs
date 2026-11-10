@@ -13,12 +13,13 @@ public sealed class BeaconsController(IBeaconService beaconService)
     [HttpGet]
     [ProducesResponseType(
         StatusCodes.Status200OK,
-        Type = typeof(IReadOnlyList<BeaconResponse>))]
-    public async Task<ActionResult<IReadOnlyList<BeaconResponse>>> GetAll(
+        Type = typeof(BeaconListResponse))]
+    public async Task<ActionResult<BeaconListResponse>> GetAll(
+        [FromQuery] BeaconQueryRequest query,
         CancellationToken cancellationToken)
     {
-        IReadOnlyList<BeaconResponse> beacons =
-            await beaconService.GetAllAsync(cancellationToken);
+        BeaconListResponse beacons =
+            await beaconService.GetPageAsync(query, cancellationToken);
         return Ok(beacons);
     }
 

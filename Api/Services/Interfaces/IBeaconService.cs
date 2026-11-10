@@ -5,7 +5,8 @@ namespace BaliseManager.Api.Services.Interfaces;
 
 public interface IBeaconService
 {
-    Task<IReadOnlyList<BeaconResponse>> GetAllAsync(
+    Task<BeaconListResponse> GetPageAsync(
+        BeaconQueryRequest query,
         CancellationToken cancellationToken = default);
 
     Task<BeaconResponse?> GetByIdAsync(
