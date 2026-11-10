@@ -4,3 +4,91 @@ GET {{BaliseManager_HostAddress}}/api/beacons
 Accept: application/json
 
 ###
+
+GET {{BaliseManager_HostAddress}}/api/beacons/1
+Accept: application/json
+
+###
+
+GET {{BaliseManager_HostAddress}}/api/beacons/999999
+Accept: application/json
+
+###
+
+POST {{BaliseManager_HostAddress}}/api/beacons
+Content-Type: application/json
+
+{
+  "code": "BCN-TEST-001",
+  "name": "Test Beacon",
+  "equipment": "Test Equipment",
+  "site": "Nantes",
+  "status": "Active",
+  "batteryLevel": 85,
+  "lastCommunicationUtc": "2026-11-10T18:00:00Z"
+}
+
+###
+
+POST {{BaliseManager_HostAddress}}/api/beacons
+Content-Type: application/json
+
+{
+  "code": "BCN-001",
+  "name": "Duplicate Beacon"
+}
+
+###
+
+POST {{BaliseManager_HostAddress}}/api/beacons
+Content-Type: application/json
+
+{
+  "code": "",
+  "name": ""
+}
+
+###
+
+PUT {{BaliseManager_HostAddress}}/api/beacons/1
+Content-Type: application/json
+
+{
+  "code": "BCN-001",
+  "name": "Workshop Beacon Updated",
+  "equipment": "Conveyor 1",
+  "site": "Nantes",
+  "status": "Maintenance",
+  "batteryLevel": 91,
+  "lastCommunicationUtc": "2026-11-10T19:00:00Z"
+}
+
+###
+
+PUT {{BaliseManager_HostAddress}}/api/beacons/999999
+Content-Type: application/json
+
+{
+  "code": "BCN-NOT-FOUND",
+  "name": "Unknown Beacon"
+}
+
+###
+
+PUT {{BaliseManager_HostAddress}}/api/beacons/1
+Content-Type: application/json
+
+{
+  "code": "BCN-002",
+  "name": "Conflicting Beacon"
+}
+
+###
+
+DELETE {{BaliseManager_HostAddress}}/api/beacons/1
+
+###
+
+DELETE {{BaliseManager_HostAddress}}/api/beacons/999999
+
+###
