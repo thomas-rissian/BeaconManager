@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="app-shell">
-        <aside class="sidebar" aria-label="Navigation principale">
+        <header class="topbar">
             <a class="brand" href="/">
                 <span class="brand-mark">BM</span>
                 <span>
@@ -16,7 +16,7 @@
                     <small>Supervision industrielle</small>
                 </span>
             </a>
-            <nav class="main-navigation">
+            <nav class="main-navigation" aria-label="Navigation principale">
                 <a class="navigation-link" href="/">
                     <span aria-hidden="true">▦</span>
                     <span>Tableau de bord</span>
@@ -30,11 +30,11 @@
                     <span>Événements</span>
                 </a>
             </nav>
-            <div class="sidebar-footer">
+            <div class="topbar-status">
                 <span class="connection-indicator is-offline" data-connection-indicator></span>
                 <span data-connection-label>Notifications déconnectées</span>
             </div>
-        </aside>
+        </header>
 
         <main class="main-content">
             <header class="page-header">
